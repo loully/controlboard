@@ -1,0 +1,1 @@
+#control board for industry
