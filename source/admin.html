@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="Graphics of workpiece measures" />
+    <meta name="author" content="Jerome Yvon" />
+    <link rel="shortcut icon" href="images/tesa_icon.png">
+
+    <title>Cartes de contrôle - Graphiques</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet" />
+    <script src="js/chart.js"></script>
+    <script src="js/papaparse.min.js"></script>
+  </head>
+  <!-- FORM VERSION -->
+
+  <body class="sub_page">
+    <!-- Header-->
+    <div class="hero_area">
+      <div class="bg-box">
+        <img src="images/Background_blue.jpg" alt="">
+      </div>
+      <!-- header section strats -->
+      <header class="header_section">
+        <div class="container">
+          <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <a class="navbar-brand" href="index.html">
+              <span>
+                <img class="logo" src="images/logo_tesa_white_version.png" alt="logo TESA" />
+              </span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class=""> </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav  mx-auto ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="admin.html">Graphiques<span class="sr-only">(current)</span> </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </header>
+    </div>
+
+    <!-- workpiece section -->
+    <section class="workpiece_section layout_padding">
+      <div class="container">
+        <div class="heading_container heading_center">
+          <h2>
+            Graphiques de carte de contrôle
+          </h2>
+        </div>
+
+        <div>
+          <p>Sélectionnez le fichier CSV</p>
+          <input type="file" id="csv-file-input">
+        </div>
+
+        <!-- Ajoutez un formulaire pour entrer les limites -->
+        <form id="limits-form">
+          <p>Définissez les limites</p>
+          <label for="min-limit">Limite Min :</label>
+          <input type="number" id="min-limit" step="0.01" required>
+          <label for="max-limit">Limite Max :</label>
+          <input type="number" id="max-limit" step="0.01" required>
+            <button type="submit">Mettre à jour les limites</button>
+        </form>
+
+        <!-- Ajoutez un élément de sélection pour choisir la référence -->
+        <select id="reference-select"></select>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <button id="show-chart-button" class="btn btn-info m-2">Afficher le graphique</button>
+          <button id="update-chart-button" class="btn btn-info m-2">Mettre à jour le graphique</button>
+        </div>
+
+        <canvas id="chart" width="400" height="200"></canvas>
+
+<!--         <form id="measure-form">
+          <p>Choisissez une référence de pièce :</p>
+          <ul class="filters_menu">
+            <li class="active" data-filter="*">Tous Secteurs</li>
+            <li data-filter=".usinage">Usinage</li>
+            <li data-filter=".decolletage">Décolletage</li>
+            <li data-filter=".tournage">Tournage</li>
+            <li data-filter=".rectification">Rectification</li>
+          </ul>
+
+          <div class="radio-group">
+
+            <div class="filters-content">
+              <div class="row grid">
+                <div class="col-sm-6 col-lg-4 all decolletage">
+                  <input type="radio" id="piece1" name="radio-article" value="article1" checked="checked"/>
+                  <div class="box">
+                    <div>
+                      <label for="piece1"></label>
+                      <div class="img-box">
+                        <img src="images/f1.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                        <h5>
+                          ARTICLE 1
+                        </h5>
+                        <p>
+                          Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                        </p>
+                        <div class="options">
+                          <h6>
+                            PMS
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all usinage">
+                  <input type="radio" id="piece2" name="radio-article" value="article2" checked="checked"/>
+                  <div class="box">
+                    <div>
+                      <label for="piece2"></label>
+                      <div class="img-box">
+                        <img src="images/f2.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                        <h5>
+                          ARTICLE 2
+                        </h5>
+                        <p>
+                          Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                        </p>
+                        <div class="options">
+                          <h6>
+                            PMS
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all decolletage">
+                  <input type="radio" id="piece3" name="radio-article" value="article3" checked="checked"/>
+                  <div class="box">
+                    <div>
+                      <label for="piece3"></label>
+                      <div class="img-box">
+                        <img src="images/f3.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                          <h5>
+                            ARTICLE 3
+                          </h5>
+                          <p>
+                            Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                          </p>
+                          <div class="options">
+                            <h6>
+                              PMS
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all tournage">
+                  <input type="radio" id="piece4" name="radio-article" value="article4" checked="checked"/>
+                  <div class="box">
+                    <div>
+                      <label for="piece4"></label>
+                      <div class="img-box">
+                        <img src="images/f4.png" alt="">
+                      </div>
+                      <div class="detail-box">
+                        <h5>
+                          Article x4
+                        </h5>
+                        <p>
+                          Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                        </p>
+                        <div class="options">
+                          <h6>
+                            $18
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all rectification">
+                 <input type="radio" id="piece5" name="radio-article" value="article5" checked="checked"/>
+                 <div class="box">
+                  <div>
+                    <label for="piece5"></label>
+                    <div class="img-box">
+                      <img src="images/f5.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <h5>
+                        Article x5
+                      </h5>
+                      <p>
+                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                      </p>
+                      <div class="options">
+                        <h6>
+                          PMS
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all decolletage">
+                 <input type="radio" id="piece6" name="radio-article" value="article6" checked="checked"/>
+                 <div class="box">
+                  <div>
+                    <label for="piece6"></label>
+                    <div class="img-box">
+                      <img src="images/f6.png" alt="">
+                    </div>
+                    <div class="detail-box">
+                      <h5>
+                        Article x6
+                      </h5>
+                      <p>
+                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                      </p>
+                      <div class="options">
+                        <h6>
+                          PMS
+                        </h6>
+                      </div>
+                    </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all usinage">
+                 <input type="radio" id="piece7" name="radio-article" value="article7" checked="checked"/>
+                  <div class="box">
+                      <div>
+                        <label for="piece7"></label>
+                        <div class="img-box">
+                          <img src="images/f7.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                          <h5>
+                            Article x7
+                          </h5>
+                          <p>
+                            Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                          </p>
+                          <div class="options">
+                            <h6>
+                              PMS
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all usinage">
+                 <input type="radio" id="piece8" name="radio-article" value="article8" checked="checked"/>
+                  <div class="box">
+                      <div>
+                        <label for="piece8"></label>
+                        <div class="img-box">
+                          <img src="images/f8.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                          <h5>
+                            Article x8
+                          </h5>
+                          <p>
+                            Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                          </p>
+                          <div class="options">
+                            <h6>
+                              PMS
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4 all tournage">
+                   <input type="radio" id="piece9" name="radio-article" value="article9" checked="checked"/>
+                  <div class="box">
+                      <div>
+                        <label for="piece9"></label>
+                        <div class="img-box">
+                          <img src="images/f9.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                          <h5>
+                            Article x9
+                          </h5>
+                          <p>
+                            Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                          </p>
+                          <div class="options">
+                            <h6>
+                              PMI
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="measures-box" class="my-5 px-0">
+            <p class="mt-2">Entrez 5 mesures pour <span id="article-selected"></span>:</p>
+            <div class="border rounded p-2">
+              <div class="d-flex justify-content-between align-items-stretch">
+                <div id="measures-container" class=" col-lg-4 col-sm-4 p-3">
+                </div>
+                <div id="preview-piece-measures-img" class="col-lg-8 col-sm-8 d-flex justify-content-center">
+                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <input type="submit" value="Enregistrer les mesures" class="m-2 btn btn-info">
+                <button id="generate-csv-button" class="btn btn-info m-2">Générer le tableau CSV</button>
+              </div>
+            </div>
+          </div>
+        </form> -->
+
+      </div>
+    </section>
+
+    <!-- end workpiece section -->
+
+    <!-- footer section -->
+    <footer class="footer_section">
+      <div class="container">
+        <div class="footer-info">
+          <p>
+            <span id="displayYear"></span> - Service Méthodes - TESA
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- footer section -->
+
+    <!-- jQuery -->
+    <!-- <script src="js/jquery-3.4.1.min.js"></script> -->
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.js"></script>
+    <!-- isotope js -->
+    <script src="js/isotope.pkgd.min.js"></script>
+    <!-- custom js -->
+    <script src="js/admin.js"></script>
+  </body>
+</html>
