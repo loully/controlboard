@@ -1,0 +1,53 @@
+/* Appliquez une palette de couleurs moderne */
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Utilisez une police de caractères moderne */
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Donnez aux boutons un look moderne avec des dégradés et des ombres */
+button {
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(to bottom, #2980b9, #3498db);
+}
+
+/* Ajoutez un effet de survol à un lien */
+a:hover {
+    color: #e74c3c;
+}
+
+/* Créez une mise en page flexible avec Flexbox */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Ajoutez un espacement entre les éléments */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Utilisez des ombres douces pour créer de la profondeur */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
